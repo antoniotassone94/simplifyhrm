@@ -1,23 +1,18 @@
 const mysql = require("mysql2");
 
 const conn = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"",
-    database:"simplifyHRM"
-    // host: process.env.databaseHost,
-    // user: process.env.databaseUsername,
-    // password: process.env.databasePassword,
-    // database: process.env.sql7595393
-})
+    host: process.env.databaseHost,
+    user: process.env.databaseUsername,
+    password: process.env.databasePassword,
+    database: process.env.databaseName
+});
 
 conn.connect((error)=>{
-    try {
-        console.log(`Connection with the database successful`);
-    } catch (error) {
+    if(error){
         console.error(error);
         return -1;
     }
-})
+    console.log(`Connection with the database successful`);
+});
 
-module.exports = conn;
+module.exports = {conn};
