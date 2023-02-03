@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS users(
     province VARCHAR(3) NOT NULL,
     cap VARCHAR(5) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    PASSWORD VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     fiscal_code VARCHAR(16) NOT NULL UNIQUE,
     date_of_birth DATE NOT NULL,
     place_of_birth VARCHAR(255) NOT NULL,

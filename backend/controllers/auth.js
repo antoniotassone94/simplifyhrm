@@ -1,23 +1,33 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+const conn = require("../connMysql2");
 
-const login = async (req,res) => {
-    const {username,password} = req.body;
-    const user = await User.findOne({username});
-    if(!user){
-        res.status(403);
-        return res.json({message:"Username o password errati.",data:"",check:false});
-    }
-    if(await bcrypt.compare(password,user.password)){
+const login = async (req, res) => {
+  const { username, password } = req.body;
+
+  const query = `SELECT *
+                    FROM users
+                    WHERE email = "${username}"`;
+
+  conn.query(query, async (error, result) => {
+    try { 
+      if (result.length == 0) {
+        return res.status(403).json({ message: "Username o password errati", data: "", check: false });
+      }
+      const pwHashed = result[0].password
+
+      if(await bcrypt.compare(password, pwHashed)){
         const token = jwt.sign({
-            id:user._id,
-            username:user.username
-        },process.env.jwtSecret)
-        return res.json({message:"Login effettuato correttamente.",data:token,check:true})
+            id: result[0].id_user,
+            username: result[0].email,
+        },process.env.jwtSecret);
+        return res.status(200).json({message: "Login effettuato correttamente.", data: token, check: true})
+      }
+      return res.status(401).json({message: "Username o password errati", data: "", check: false})
+    } catch (error) {
+      return res.status(400).json({ message: error.message, data: "", check: false });
     }
-    res.status(401);
-    res.json({message:"Username o password errati.",data:"",check:false});
-}
+  });
+};
 
-module.exports = {login};
+module.exports = { login };
