@@ -1,10 +1,10 @@
 const mysql = require("mysql2");
 
 const conn = mysql.createConnection({
-    host:"sql7.freesqldatabase.com",
-    user:"sql7595393",
-    password:"Z7JHd2BAa8",
-    database:"sql7595393"
+    host:process.env.dbHost,
+    user:process.env.dbUser,
+    password:process.env.dbPassword,
+    database:process.env.dbName
 });
 
 conn.connect((error)=>{
