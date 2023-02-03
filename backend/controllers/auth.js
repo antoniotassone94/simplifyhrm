@@ -6,7 +6,8 @@ const login = async (req, res) => {
   const {username,password} = req.body;
   const query = `SELECT *
                 FROM users
-                WHERE email = "${username}"`;
+                WHERE email = '${username}'`;
+
   conn.query(query, async (error, result) => {
     try { 
       if (result.length == 0) {
