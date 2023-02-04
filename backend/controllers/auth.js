@@ -1,16 +1,15 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {conn} = require("../connMysql2.js");
+const conn = require("../connMysql2.js");
 
 const login = async (req, res) => {
   const {username,password} = req.body;
   const query = `SELECT * FROM users WHERE email = '${username}'`;
-  conn.connect((error1)=>{
-    if(error1){
-        console.error(error1);
-        return -1;
-    }
-    console.log("Connection with the database successful");
+  //conn.connect((error1)=>{
+    //if(error1){
+      //return res.status(400).json({ message: error1.message, data: "", check: false });
+    //}
+    //console.log("Connection with the database successful");
     conn.query(query,async (error2, result) => {
       if(error2){
         return res.status(400).json({ message: error2.message, data: "", check: false });
@@ -35,7 +34,7 @@ const login = async (req, res) => {
         return res.status(400).json({ message: error3.message, data: "", check: false });
       }
     });
-  });
+  //});
 };
 
 module.exports = {login};
