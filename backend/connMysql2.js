@@ -7,12 +7,12 @@ const conn = mysql.createConnection({
     database:process.env.dbName
 });
 
-conn.connect((error)=>{
+/*conn.connect((error)=>{
     if(error){
         console.error(error);
         return -1;
     }
     console.log(`Connection with the database successful`);
-});
+});*/
 
 module.exports = conn;
