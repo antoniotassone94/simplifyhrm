@@ -9,6 +9,9 @@ const login = async (req, res) => {
                 WHERE email = '${username}'`;
 
   conn.query(query, async (error, result) => {
+    if(error){
+      return res.status(400).json({ message: error.message, data: "", check: false });
+    }
     try { 
       if (result.length == 0) {
         return res.status(403).json({ message: "Username o password errati", data: "", check: false });
@@ -22,8 +25,8 @@ const login = async (req, res) => {
         return res.status(200).json({message: "Login effettuato correttamente.", data: token, check: true});
       }
       return res.status(401).json({message: "Username o password errati", data: "", check: false});
-    } catch (error) {
-      return res.status(400).json({ message: error.message, data: "", check: false });
+    } catch (error1) {
+      return res.status(400).json({ message: error1.message, data: "", check: false });
     }
   });
 };
