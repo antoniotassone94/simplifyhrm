@@ -15,4 +15,4 @@ const conn = mysql.createConnection({
     console.log(`Connection with the database successful`);
 });*/
 
-module.exports = conn;
+module.exports = {conn}
