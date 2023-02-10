@@ -37,4 +37,4 @@ CREATE TABLE IF NOT EXISTS users_roles(
     id_role INT NOT NULL,
   	FOREIGN KEY(id_user) REFERENCES users(id_user),
   	FOREIGN KEY(id_role) REFERENCES roles(id_role)
-)
+);

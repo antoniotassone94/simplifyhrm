@@ -1,4 +1,5 @@
 backend/node_modules
-backend/.env
+# backend/.env
 .DS_STORE
 backend/.DS_STORE
+backend/etc/secrets/.env

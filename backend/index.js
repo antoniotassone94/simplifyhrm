@@ -4,9 +4,9 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 
 const app = express();
-//dotenv.config();
-dotenv.config({path:"/etc/secrets/.env"});
-const port = process.env.port || 3000;
+// dotenv.config();
+dotenv.config({path:"./etc/secrets/.env"});
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
