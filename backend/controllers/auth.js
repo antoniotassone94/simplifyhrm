@@ -5,36 +5,27 @@ const conn = require("../connMysql2.js");
 const login = async (req, res) => {
   const {username,password} = req.body;
   const query = `SELECT * FROM users WHERE email = '${username}'`;
-  //conn.connect((error1)=>{
-    //if(error1){
-      //return res.status(400).json({ message: error1.message, data: "", check: false });
-    //}
-    //console.log("Connection with the database successful");
-    conn.query(query,async (error2, result) => {
-      if(error2){
-        return res.status(400).json({ message: error2.message, data: "", check: false });
+  conn.query(query,async (error2, result) => {
+    if(error2){
+      return res.status(400).json({ message: error2.message, data: "", check: false });
+    }
+    try { 
+      if (result.length == 0) {
+        return res.status(403).json({ message: "Username o password errati", data: "", check: false });
       }
-      try { 
-        if (result.length == 0) {
-          conn.end();
-          return res.status(403).json({ message: "Username o password errati", data: "", check: false });
-        }
-        const pwHashed = result[0].password;
-        if(await bcrypt.compare(password, pwHashed)){
-          const token = jwt.sign({
-            id: result[0].id_user,
-            username: result[0].email,
-          },process.env.jwtSecret);
-          conn.end();
-          return res.status(200).json({message: "Login effettuato correttamente.", data: token, check: true});
-        }
-        conn.end();
-        return res.status(401).json({message: "Username o password errati", data: "", check: false});
-      } catch (error3) {
-        return res.status(400).json({ message: error3.message, data: "", check: false });
+      const pwHashed = result[0].password;
+      if(await bcrypt.compare(password, pwHashed)){
+        const token = jwt.sign({
+          id: result[0].id_user,
+          username: result[0].email,
+        },process.env.jwtSecret);
+        return res.status(200).json({message: "Login effettuato correttamente.", data: token, check: true});
       }
-    });
-  //});
+      return res.status(401).json({message: "Username o password errati", data: "", check: false});
+    } catch (error3) {
+      return res.status(400).json({ message: error3.message, data: "", check: false });
+    }
+  });
 };
 
 module.exports = {login};
