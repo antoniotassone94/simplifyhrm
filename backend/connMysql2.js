@@ -5,14 +5,14 @@ dotenv.config();
 // dotenv.config({path:"./etc/secrets/.env"});
 
 const conn = mysql.createConnection({
-    // host: process.env.databaseHost,
-    // user: process.env.databaseUsername,
-    // password: process.env.databasePassword,
-    // database: process.env.databaseName,
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "simplifyHRM",
+    host: process.env.databaseHost,
+    user: process.env.databaseUsername,
+    password: process.env.databasePassword,
+    database: process.env.databaseName,
+    // host: "localhost",
+    // user: "root",
+    // password: "",
+    // database: "simplifyHRM",
 });
 
 conn.connect((error)=>{
