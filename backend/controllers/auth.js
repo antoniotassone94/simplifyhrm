@@ -44,6 +44,23 @@ const loginCompanies = (req, res)=>{
   })
 }
 
+const modifyCompanies = (req, res)=>{
+  const data = req.body
+  const {id} = req.user
+
+  const query = `UPDATE companies SET ? WHERE id_company = ${id}`
+
+  conn.query(query, data, (error, result)=>{
+    if(error) return res.status(400).json({message: error.message, data:"", check: false})
+
+    try {
+      return res.status(200).json({message: "Modifica effettuata correttamente", data: result, check: true})
+    } catch (error) {
+      return res.status(400).json({message: error.message, data: "", check: false})
+    }
+  })
+}
+
 // FIX Login User
 const login = async (req, res) => {
   const {username,password} = req.body;
@@ -71,4 +88,4 @@ const login = async (req, res) => {
   });
 };
 
-module.exports = {login, registerCompanies, loginCompanies};
+module.exports = {login, registerCompanies, loginCompanies, modifyCompanies};

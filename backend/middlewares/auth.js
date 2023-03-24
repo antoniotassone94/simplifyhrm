@@ -8,7 +8,6 @@ function authenticateToken(req,res,next){
         return res.json({message:"Utente non autorizzato a procedere.",check:false});
     }
     jwt.verify(token,process.env.jwtSecret,(error,user) => {
-        console.error(error);
         if(error){
             res.status(403);
             return res.json({message:"Utente non autorizzato a procedere.",check:false});
